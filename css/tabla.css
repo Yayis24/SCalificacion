@@ -1,0 +1,91 @@
+/* Estilos para la tabla de aprendices (Vista del profesor en estudiantes.php) */
+
+h1{
+    text-align: center;
+    font-family: century gothic;
+    margin-bottom: 2%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    font-family:century gothic;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table thead {
+    background-color: #545454;
+    color: #fff;
+  }
+  
+  .table th {
+    font-weight: bold;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+
+  #add{
+    color: #1c93ca;
+  }
+
+  #back{
+    color:#2ba15c;
+    margin-bottom: 2rem;
+  }
+
+  #editButton{
+    color: #dcd218;
+  }
+
+  #deletebutton{
+    color: #ee1414;
+  }
+  
+  /* Opcional: Estilos adicionales según tus necesidades */
+  
+  /* ESTILOS PARA FILTRO DE GRADOS */
+
+form{
+  margin-top: 5%;
+  margin-bottom: 15px;
+  font-family: century Gothic;
+
+}
+
+form label{
+  font-size: 18px;
+  font-family: century Gothic;
+  margin-bottom: 5px;
+}
+
+form select{
+  display: inline-block;
+  width: 20%;
+}
+
+#Filtro{
+  display: inline-flex;
+  margin: auto;
+}
+
+#nota{
+  color: #1c93ca;
+}
+
+#save{
+  color: white;
+}
+

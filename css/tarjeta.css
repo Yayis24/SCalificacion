@@ -1,0 +1,114 @@
+/* Estilos de tarjetas de index vista profesor */
+
+main{
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.container-box{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box{
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    padding: 20px;
+    border: 2px solid #eee;
+    border-radius: 14px;
+    text-align: center;
+    margin-top: 100px;
+    position: relative;
+}
+
+.box img{
+    width: 60%;
+    transition: 400ms;
+}
+
+.box h1{
+    font-size: 18px;
+    margin-top: 10px;
+    transition: 500ms;
+}
+
+.box .container-p{
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden; 
+    padding: 0 10px;
+    border-radius: 0px 0px 14px 14px; /* cada uno son el borde de cada esquina del contenedor */
+
+}
+
+.box p{
+    font-size: 14px;
+    color: rgba(73, 87, 73, 0.667);
+    opacity: 0;
+    transform: translateY(150px);
+    transition: 600ms;
+    
+}
+
+.box .check{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%);
+    border: 2px solid #7a7a7a;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    background: white;
+
+}
+
+.box .check i{
+    margin-top: 3px;
+    display: none;
+    color: white;
+
+}
+
+/* Efecto hover transicion */
+
+.box:hover{
+    background: #b2e7c2;
+}
+
+.box:hover img{
+    transform: translateY(-90px);
+}
+
+.box:hover h1{
+    transform: translateY(-90px);
+}
+
+.box:hover .container-p p{
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+/* Clases en javascript */
+
+/* .box-selected{
+    border-color: green;
+    transition: all 600ms;
+}
+
+.icon-check{
+    display: block;
+}
+
+.check-selected{
+    background: green;
+    border: none;
+    transition: all 600ms;
+} */
