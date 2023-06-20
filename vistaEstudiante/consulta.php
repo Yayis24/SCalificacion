@@ -53,8 +53,8 @@
 
 <h1 id="inicio">Consulta tus notas</h1>
 
-<div id="container">
-    <form action="" method="post">
+<div id="container" style="text-align: center;">
+    <form action="" method="post" >
     <table>
         <tr>
             <td>
@@ -94,7 +94,7 @@
                 <table class='table'>
                 <thead class='thead-dark'>
                 <tr>
-                <td><center><b>N° Documento</b></center></td>
+                <td><center><b>Documento</b></center></td>
                 <td><center><b>Aprendiz</b></center></td>
                 <td><center><b>Correo</b></center></td>
                 <td><center><b>Id Cursos</b></center></td>

@@ -1,17 +1,19 @@
     /* Estilo para el formulario */
+
+    /*Centrar el contenido*/
+
     form {
-        width: 500px;
+        width: 100%;
+        max-width: 500px; 
         margin: 0 auto;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        align-items: center;
         margin-bottom: 5rem;
     }
 
     /* Estilo para las etiquetas de los campos */
     label {
-        display: block;
         margin-bottom: 10px;
         font-weight: bold;
     }
@@ -26,7 +28,6 @@
 
     /* Estilo para el botón de enviar */
     input[type="submit"] {
-        display: block;
         margin-top: 20px;
         padding: 10px 20px;
         background-color: #30a136;
@@ -34,8 +35,7 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 17rem;
-        margin-right: 1rem;
+
     }
 
     /* Estilo para el botón de enviar al pasar el cursor */

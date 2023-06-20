@@ -38,7 +38,6 @@ $materias = $resultadoMaterias->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://kit.fontawesome.com/1ade5e208e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/tabla.css">
-    <link rel="stylesheet" href="../css/modals.css">
     <link rel="stylesheet" href="../css/modaldelete.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Control de notas</title>
@@ -144,7 +143,7 @@ function guardar(materiaId, promedio) {
             <td><input type="number" name="nota2" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
             <td><input type="number" name="nota3" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
             <td><input type="number" name="notafinal" value="0" readonly="readonly" disabled></td>
-            <td><button type="submit" name="guardar" id="save">Guardar</button></td>
+            <td><button type="submit" name="guardar"><i class="fa-solid fa-floppy-disk save"></i></button></td>
         </tr>
 
         

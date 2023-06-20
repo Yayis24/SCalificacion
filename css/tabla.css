@@ -85,7 +85,31 @@ form select{
   color: #1c93ca;
 }
 
-#save{
+/*Estilos de notas.php*/
+
+.save{
   color: white;
+  margin: auto;
+  width: 50%;
+  
+
 }
+
+input {
+	width: calc(100% - 90px);
+	padding: 8px;
+	margin: auto;
+	margin-top: 12px;
+	font-size: 16px
+}
+
+button {
+  padding: 8px 20px 8px 8px;
+  background-color: rgb(37, 185, 61);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
 
