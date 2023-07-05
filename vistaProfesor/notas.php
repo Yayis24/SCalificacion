@@ -5,27 +5,22 @@ include_once '../modelo/conexion.php';
 $objeto = new conexion();
 $conexion = $objeto->Conectar();
 
-$consultaNombre = "SELECT Nombre FROM aprendices WHERE Id = $usuarioId";
+$consultaNombre = "SELECT Nombre, Id AS numb FROM aprendices WHERE Id = $usuarioId";
 $resultadoNombre = $conexion->prepare($consultaNombre);
 $resultadoNombre->execute();
 $nombreUsuario = $resultadoNombre->fetchColumn();
 
 
-$consultaCalificaciones = "SELECT c.Id, m.Nombre AS Materia, c.Promedio 
-                        FROM calificacion c
-                        INNER JOIN materia m ON c.Id_Materia = m.Id";
-$resultadoCalificaciones = $conexion->prepare($consultaCalificaciones);
-$resultadoCalificaciones->execute();
-$calificaciones = $resultadoCalificaciones->fetchAll(PDO::FETCH_ASSOC);
-
-
-$consultaMaterias = "SELECT * FROM materia";
-$resultadoMaterias = $conexion->prepare($consultaMaterias);
-$resultadoMaterias->execute();
-$materias = $resultadoMaterias->fetchAll(PDO::FETCH_ASSOC);
-
-
+$consultaCali = "SELECT c.*, c.Id, c.Id_Profesor, c.Id_Alumno, c.Id_Materia, c.Promedio
+                    FROM calificacion c
+                    INNER JOIN profesor p ON c.Id_Profesor = p.Id
+                    INNER JOIN aprendices a ON c.Id_Alumno = a.Id
+                    INNER JOIN materia m ON c.Id_Materia = m.Id";
+$resultadoC = $conexion->prepare($consultaCali);
+$resultadoC->execute();
+$Calificacion = $resultadoC->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 
 
 <!DOCTYPE html>
@@ -42,35 +37,6 @@ $materias = $resultadoMaterias->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Control de notas</title>
     
-    <script>
-function calcularPromedio(nota1, nota2, nota3, promedioId) {
-    var a = parseFloat(nota1),
-        b = parseFloat(nota2),
-        c = parseFloat(nota3);
-    var promedio = (a + b + c) / 3;
-    document.getElementById(promedioId).value = promedio.toFixed(2);
-}
-
-function guardar(materiaId, promedio) {
-    var formData = new FormData();
-    formData.append('materiaId', materiaId);
-    formData.append('promedio', promedio);
-
-    fetch('guardar_calificaciones.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(result => {
-        console.log(result);
-        // Aquí puedes mostrar un mensaje de éxito o realizar otras acciones después de guardar las calificaciones
-    })
-    .catch(error => {
-        console.error(error);
-        // Aquí puedes mostrar un mensaje de error o realizar otras acciones en caso de que ocurra un problema
-    });
-}
-</script>
 </head>
 
 <body>
@@ -122,11 +88,13 @@ function guardar(materiaId, promedio) {
 
 
 <form action="guardardatos.php" method="POST">
-<table class="table">
+    <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th>Id</th>
-                <th>Materia</th>
+                <th>Id Docente</th>
+                <th>Id Estudiante</th>
+                <th>Id Materia</th>
                 <th>Nota1</th>
                 <th>Nota2</th>
                 <th>Nota3</th>
@@ -135,34 +103,33 @@ function guardar(materiaId, promedio) {
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($materias as $materia) : ?>
-            <tr>
-            <td><?php echo $materia['Id']; ?></td>
-            <td><?php echo $materia['Nombre']; ?></td>
-            <td><input type="number" name="nota1" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
-            <td><input type="number" name="nota2" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
-            <td><input type="number" name="nota3" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
-            <td><input type="number" name="notafinal" value="0" readonly="readonly" disabled></td>
-            <td><button type="submit" name="guardar"><i class="fa-solid fa-floppy-disk save"></i></button></td>
-        </tr>
-
-        
+            <?php foreach ($Calificacion as $Cali) : ?>
+                <tr>
+                    <td><?php echo $Cali['Id']; ?></td>
+                    <td><?php echo $Cali['Id_Profesor']; ?></td>
+                    <td><?php echo $Cali['Id_Alumno']; ?></td>
+                    <td><?php echo $Cali['Id_Materia']; ?></td>
+                    <td><input type="number" name="nota1[]" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
+                    <td><input type="number" name="nota2[]" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
+                    <td><input type="number" name="nota3[]" value="0" onchange="calcularPromedio(this)" onkeyup="calcularPromedio(this)"></td>
+                    <td><input type="number" name="promedio" value="0" readonly="readonly"></td>
+                    <td><button type="submit" name="guardar[]"><i class="fa-solid fa-floppy-disk save"></i></button></td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    
-
 </form>
+
 
     <!-- Script para logica de notas -->
 
     <script>
     function calcularPromedio(input) {
         var row = input.parentNode.parentNode;
-        var nota1 = parseFloat(row.querySelector('input[name="nota1"]').value);
-        var nota2 = parseFloat(row.querySelector('input[name="nota2"]').value);
-        var nota3 = parseFloat(row.querySelector('input[name="nota3"]').value);
-        var promedioInput = row.querySelector('input[name^="notafinal"]');
+        var nota1 = parseFloat(row.querySelector('input[name="nota1[]"]').value);
+        var nota2 = parseFloat(row.querySelector('input[name="nota2[]"]').value);
+        var nota3 = parseFloat(row.querySelector('input[name="nota3[]"]').value);
+        var promedioInput = row.querySelector('input[name^="promedio"]');
         
         var promedio = (nota1 + nota2 + nota3) / 3;
         promedioInput.value = promedio.toFixed(2);

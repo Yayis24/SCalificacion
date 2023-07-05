@@ -98,47 +98,46 @@ $cursos = $resultadoCursos->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    foreach($usuarios as $filtro){
-                    
-            // Obtener el nombre del curso correspondiente al ID de curso en la tabla de "cursos"
-            include("../modelo/conexioncrud.php");
-            $queryCurso = mysqli_query($conectar, "SELECT Grado FROM cursos WHERE Id = '{$filtro['Id_Cursos']}'");
-            $nombreCurso = mysqli_fetch_assoc($queryCurso)['Grado'];
-                ?>
+            <?php
+            foreach ($usuarios as $filtro) {
+                // Obtener el nombre del curso correspondiente al ID de curso en la tabla de "cursos"
+                include("../modelo/conexioncrud.php");
+                $queryCurso = mysqli_query($conectar, "SELECT Grado FROM cursos WHERE Id = '{$filtro['Id_Cursos']}'");
+                $nombreCurso = mysqli_fetch_assoc($queryCurso)['Grado'];
+            ?>
                 <tr>
-                    <td><?php echo $filtro['Id']?></td>
-                    <td><?php echo $filtro['Nombre']?></td>
-                    <td><?php echo $filtro['Tipo_Documento']?></td>
-                    <td><?php echo $filtro['Documento']?></td>
-                    <td><?php echo $filtro['Celular']?></td>
-                    <td><?php echo $filtro['Correo']?></td>
-                    <td><?php echo $filtro['Id_Cursos']?></td>
-                    <td><?php echo $nombreCurso?></td>
+                    <td><?php echo $filtro['Id'] ?></td>
+                    <td><?php echo $filtro['Nombre'] ?></td>
+                    <td><?php echo $filtro['Tipo_Documento'] ?></td>
+                    <td><?php echo $filtro['Documento'] ?></td>
+                    <td><?php echo $filtro['Celular'] ?></td>
+                    <td><?php echo $filtro['Correo'] ?></td>
+                    <td><?php echo $filtro['Id_Cursos'] ?></td>
+                    <td><?php echo $nombreCurso ?></td>
                     <td><a href="#"><i class="fa-solid fa-pen-to-square editButton" id="editButton"></i></a></td>
                     <td><a href="#"><i class="fa-sharp fa-solid fa-trash deleteButton" id="deletebutton"></i></a></td>
-                    
+
                 </tr>
-                <?php
-                }
-                ?>
+            <?php
+            }
+            ?>
+
             </tbody>
         </table>
     </div>
 
-    <!--Modal editar-->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <h2>Editar</h2>
-            <form action="../controlador/edit.php" id="editForm" method="post">
-                <input type="hidden" name="id" id="update_id">
-                <!-- Campos del formulario de edición -->
-
-                <div>
-                    <label for="Nombre">Nombre:</label>
-                    <input type="text" id="Nombre" name="Nombre" value="<?php echo $filtro['Nombre']; ?>">
-                </div>
-                <div>
+<!-- Modal editar -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2>Editar</h2>
+        <form action="../controlador/edit.php" id="editForm" method="post">
+            <input type="hidden" name="id" id="update_id">
+            <!-- Campos del formulario de edición -->
+            <div>
+                <label for="Nombre">Nombre:</label>
+                <input type="text" id="Nombre" name="Nombre" value="">
+            </div>
+            <div>
                 <label for="Tipo_Documento">Tipo_Documento:</label>
                 <select id="Tipo_Documento" name="Tipo_Documento">
                     
@@ -157,21 +156,21 @@ $cursos = $resultadoCursos->fetchAll(PDO::FETCH_ASSOC);
 
                 </select>
                 </div>
-                <div>
-                    <label for="Documento">Documento:</label>
-                    <input type="text" id="Documento" name="Documento" value="<?php echo $filtro['Documento']; ?>">
-                </div>
-                <div>
-                    <label for="Celular">Celular:</label>
-                    <input type="text" id="Celular" name="Celular" value="<?php echo $filtro['Celular']; ?>">
-                </div>
-                <div>
-                    <label for="Correo">Correo:</label>
-                    <input type="text" id="Correo" name="Correo" value="<?php echo $filtro['Correo']; ?>">
-                </div>
-                <div>
+            <div>
+                <label for="Documento">Documento:</label>
+                <input type="text" id="Documento" name="Documento" value="">
+            </div>
+            <div>
+                <label for="Celular">Celular:</label>
+                <input type="text" id="Celular" name="Celular" value="">
+            </div>
+            <div>
+                <label for="Correo">Correo:</label>
+                <input type="text" id="Correo" name="Correo" value="">
+            </div>
+            <div>
                 <label for="Id_Cursos">Id_Cursos:</label>
-                <select name="Id_Cursos" class="form-control">
+                <select name="Id_Cursos" id="Id_Cursos" class="form-control">
                     <option value="">Elige</option>
                     <?php
                     foreach ($cursos as $curso) {
@@ -179,34 +178,30 @@ $cursos = $resultadoCursos->fetchAll(PDO::FETCH_ASSOC);
                         $nombreCurso = $curso['Grado'];
                         ?>
                         <option value="<?php echo $idCurso; ?>"><?php echo $idCurso; ?> - <?php echo $nombreCurso; ?></option>
-                    <?php
+                        <?php
                     }
                     ?>
                 </select>
-
-                </div>
-                <button id="actualizar" type="submit">Actualizar</button>
-                <button type="button"  id="cerrarmodal">Cerrar</button>
-            </form>
-        </div>
+            </div>
+            <button id="actualizar" type="submit">Actualizar</button>
+            <button type="button" id="cerrarmodal">Cerrar</button>
+        </form>
     </div>
-
+</div>
 
 
     <!--Modal Eliminar-->
     <div class="modale" id="modale">
-      <div class="modale-content">
+    <div class="modale-content">
         <h2>Confirmar Eliminación</h2>
         <p>¿Estás seguro de que deseas eliminar este registro?</p>
-        <form action="../controlador/delete.php" id="" method="post">
-          <input type="hidden" name="id" id="delete_id" value="<?php echo $filtro['Id']; ?>">
-          <button id="confirm-delete">Eliminar</button>
-          <button type="button" id="no-delete">Cancelar</button>
+        <form action="../controlador/delete.php" id="deleteForm" method="post">
+        <input type="hidden" name="delete_id" id="delete_id" value="">
+        <button id="confirm-delete">Eliminar</button>
+        <button type="button" id="no-delete">Cancelar</button>
         </form>
-      </div>
     </div>
-
-
+    </div>
 
 
 
@@ -216,7 +211,7 @@ $cursos = $resultadoCursos->fetchAll(PDO::FETCH_ASSOC);
         $tr = $(this).closest('tr');
         var datos = $tr.children("td").map(function() {
             return $(this).text();
-        });
+        }).get();
 
         // Rellenar los campos del formulario de edición con los datos obtenidos
         $('#update_id').val(datos[0]);
@@ -225,8 +220,14 @@ $cursos = $resultadoCursos->fetchAll(PDO::FETCH_ASSOC);
         $('#Documento').val(datos[3]);
         $('#Celular').val(datos[4]);
         $('#Correo').val(datos[5]);
-        $('#Id_Cursos').val(datos[6]);
 
+        // Obtener el valor del grado del estudiante
+        var gradoEstudiante = datos[7];
+
+        // Seleccionar el grado correspondiente en el desplegable
+        $('#Id_Cursos option').filter(function() {
+            return $(this).text().indexOf(gradoEstudiante) > -1;
+        }).prop('selected', true);
 
         // Abrir el modal de edición
         $('#modal').css('display', 'block');
@@ -235,30 +236,30 @@ $cursos = $resultadoCursos->fetchAll(PDO::FETCH_ASSOC);
             // Cerrar el modal
             $('#modal').css('display', 'none');
         });
-
     });
-    </script>
+</script>
+
 
 
 <!-- Eliminar Script -->
     <script>
-      $('.deleteButton').on('click' ,function() {
-        $tr=$(this).closest('tr');
-        var datos=$tr.children("td").map(function(){
-          return $(this).text();
-          });
-          $('#Id').val(datos['0']);
+    $('.deleteButton').on('click', function() {
+        $tr = $(this).closest('tr');
+        var datos = $tr.children("td").map(function() {
+        return $(this).text();
+        }).get();
+        $('#delete_id').val(datos[0]);
 
-          //Abrir modal
-          $('#modale').css('display', 'block');
+        //Abrir modal
+        $('#modale').css('display', 'block');
 
         // Cerrar el modal
-            $('#no-delete').on('click', function() {
+        $('#no-delete').on('click', function() {
         $('#modale').css('display', 'none');
-      });
-
-      })
+        });
+    });
     </script>
+
 
 </body>
 

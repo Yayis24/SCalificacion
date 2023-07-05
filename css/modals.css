@@ -105,14 +105,26 @@ h2 {
     background-color: #30a136;
   }
 
-  #actualizar{
-    margin-top: 5%;
+  #actualizar {
+    flex-grow: 1;
+    margin-right: 1px;
   }
-
-  #cerrarmodal{
-    margin-top: 5%;
+  
+  #cerrarmodal {
+    flex-grow: 1;
     background-color: #d32f2f;
-
+  }
+  
+  @media screen and (max-width: 600px) {
+    #botones {
+      flex-wrap: wrap;
+    }
+  
+    #actualizar,
+    #cerrarmodal {
+      width: 100%;
+      margin-bottom: 5px;
+    }
   }
 
 
