@@ -85,7 +85,13 @@
             location.href = '../vistaEstudiante/consulta.php';</script>";
         }
         else{
-            $resultado = mysqli_query($conectar, "SELECT * FROM aprendices WHERE Documento = '$documento'");
+            $resultado = mysqli_query($conectar, "SELECT c.*, c.Id, c.Id_Profesor, c.Id_Alumno, c.Id_Materia, c.Promedio, p.Docente AS NombreProfe,
+                                                    m.Nombre AS MateriaName
+                                                    FROM calificacion c
+                                                    INNER JOIN profesor p ON c.Id_Profesor = p.Id
+                                                    INNER JOIN aprendices a ON c.Id_Alumno = a.Id
+                                                    INNER JOIN materia m ON c.Id_Materia = m.Id
+                                                    WHERE Documento = '$documento'");
     
             while($consulta = mysqli_fetch_array($resultado))
             {
